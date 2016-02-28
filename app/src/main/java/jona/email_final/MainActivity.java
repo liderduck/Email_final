@@ -6,10 +6,6 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Environment;
-import android.preference.DialogPreference;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -17,30 +13,21 @@ import android.text.Spannable;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Node;
-
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Scanner;
+
 
 public class MainActivity extends AppCompatActivity {
-    HashSet<String>dicc = new HashSet<String>();
+    HashSet<String>dicc = new HashSet<>();
     HashMap<String,Integer> dicError = new HashMap<>();
     private EditText t3;
     private int nColor,nLetra;
@@ -98,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void comprobar(){
         String[] palabra;
-        int inicio,fin;
+        int inicio;
         int correct=0;
 
         String texto= t3.getText().toString();
@@ -166,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         Iterator miIt2 = dicError.keySet().iterator();
         while (miIt2.hasNext()){
             String j=(String) miIt2.next();
-            Integer k = (Integer) dicError.get(j);
+            Integer k =  dicError.get(j);
             marcar(j,nLetra,null,k);
         }
     }
@@ -198,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
         Iterator miIt2 = dicError.keySet().iterator();
         while (miIt2.hasNext()){
             String j=(String) miIt2.next();
-            Integer k = (Integer) dicError.get(j);
+            Integer k =  dicError.get(j);
             marcar(j,null,nColor,k);
         }
     }
@@ -207,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
         Iterator miIt = dicError.keySet().iterator();
         while (miIt.hasNext()){
             String j=(String) miIt.next();
-            Integer k = (Integer) dicError.get(j);
+            Integer k = dicError.get(j);
             disInfo(j,k).show();
         }
 
