@@ -3,6 +3,7 @@ package jona.email_final;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -27,12 +28,13 @@ import java.util.Iterator;
 
 
 public class MainActivity extends AppCompatActivity {
+    int request_code=1;
     HashSet<String>dicc = new HashSet<>();
     HashMap<String,Integer> dicError = new HashMap<>();
     private EditText t3;
     private int nColor,nLetra;
     private int ultLetra=Typeface.BOLD;
-    private int ultColor=Color.BLACK;
+    private int ultColor=Color.RED;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,9 +80,18 @@ public class MainActivity extends AppCompatActivity {
         }else if(id==R.id.action_estilo){
             verEstilo().show();
             return true;
+        }else if(id==R.id.action_diccionario){
+            verDiccionario();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void verDiccionario(){
+        Intent intent= new Intent(this,Main2Activity.class);
+        intent.putExtra("hash",dicc);
+        startActivityForResult(intent, request_code);
     }
 
     public void comprobar(){
@@ -95,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
 
             if (!dicc.contains(palabra[i])) {
                 inicio=correct;
-                nLetra=Typeface.BOLD;
-                nColor=Color.RED;
+                nLetra=ultLetra;
+                nColor=ultColor;
                 marcar(palabra[i],nLetra,nColor,inicio);
                 dicError.put(palabra[i], inicio);
 
@@ -266,6 +277,14 @@ public class MainActivity extends AppCompatActivity {
         catch (Exception ex)
         {
             Log.e("Ficheros", "Error al escribir fichero a memoria interna");
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode,int resultCode,Intent data){
+            if((requestCode==request_code)&&(resultCode==RESULT_OK)){
+            dicc=(HashSet<String>) data.getSerializableExtra("tabla");
+                grabarDic();
+
         }
     }
 }
